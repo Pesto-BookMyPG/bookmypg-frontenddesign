@@ -21,7 +21,7 @@ const headersData = [
   },
   {
     label: "Login",
-    href: "/",
+    href: "/login",
   },
   {
     label: "About us",
