@@ -20,16 +20,16 @@ const headersData = [
     href: "/listings",
   },
   {
-    label: "Login",
-    href: "/login",
-  },
-  {
     label: "About us",
     href: "/account",
   },
   {
     label: "Contact us",
     href: "/logout",
+  },
+  {
+    label: "Login",
+    href: "/login",
   },
 ];
 
