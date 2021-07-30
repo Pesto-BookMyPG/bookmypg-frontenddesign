@@ -4,11 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/icons
 
-// core components
 import Grid from "@material-ui/core/Grid";
-import Header from "./header";
-import Content from "./content";
-import Footer from "./footer";
 //import GridItem from "@material-ui/core/GridItem";
 //import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "@material-ui/core/Button";
@@ -36,6 +32,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { createTheme } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
+
+// core components
+import Propertycontent from "./Propertycontent";
+import Header from "../components/header";
+import Content from "../components/content";
+import Footer from "../components/footer";
 
 //import styles from "assets/jss/material-kit-react/views/landingPageSections/workStyle.js";
 
@@ -200,9 +202,9 @@ export default function WorkSection() {
         contrastText: "#fff",
       },
       secondary: {
-        light: "#616161",
+        light: "#ff7961",
         main: "#616161",
-        dark: "#616161",
+        dark: "#ba000d",
         contrastText: "#fff",
       },
     },
@@ -213,7 +215,7 @@ export default function WorkSection() {
       <MuiThemeProvider theme={newtheme}>
         <Grid container alignItems="center">
           <Header title="Blog" sections={sections} />
-          <Content />
+          <Propertycontent />
           <Footer />
         </Grid>
       </MuiThemeProvider>

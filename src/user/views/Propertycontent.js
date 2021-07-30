@@ -27,7 +27,7 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 import { useTheme } from "@material-ui/core/styles";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import Rating from "../LandingPage/rating";
+import Rating from "../components/rating";
 
 const MyCollection = [
   {
