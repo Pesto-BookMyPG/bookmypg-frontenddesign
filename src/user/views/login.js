@@ -22,6 +22,7 @@ export default function FormDialog(props) {
 
   const handleClose = () => {
     setOpen(false);
+    history.push("/");
   };
 
   const handleLogin = async () => {
