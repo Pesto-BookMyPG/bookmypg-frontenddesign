@@ -5,13 +5,17 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 
 // pages for this product
-import LandingPage from "../src/views/LandingPage/newtest";
+import LandingPage from "./views/LandingPage/Homepage";
+import Propertydetails from "./views/LandingPage/Propertydetails";
+import Login from "./views/LandingPage/login";
 
 var hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
+      <Route path="/propertydetails" component={Propertydetails} />
+      <Route path="/login" component={Login} />
       <Route path="/" component={LandingPage} />
     </Switch>
   </Router>,
