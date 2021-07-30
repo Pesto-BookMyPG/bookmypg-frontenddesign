@@ -12,6 +12,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import Terms from "../LandingPage/terms";
 
 const headersData = [
   {
@@ -20,7 +21,7 @@ const headersData = [
   },
   {
     label: "Login",
-    href: "/login",
+    href: "/",
   },
   {
     label: "About us",
@@ -70,6 +71,9 @@ export default function Header() {
     mobileView: false,
     drawerOpen: false,
   });
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openDialogName, setOpenDialog] = React.useState(null);
 
   const { mobileView, drawerOpen } = state;
 
@@ -134,8 +138,35 @@ export default function Header() {
   };
 
   const getDrawerChoices = () => {
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const openTermsDialog = () => {
+      setOpenDialog("TERMS");
+      handleClose();
+    };
+
+    const openPrivacyDialog = () => {
+      setOpenDialog("PRIVACY");
+      handleClose();
+    };
+
+    const closeDialog = () => {
+      setOpenDialog(null);
+    };
+
     return headersData.map(({ label, href }) => {
-      return (
+      return label === "Login" ? (
+        <div>
+          <MenuItem onClick={openTermsDialog}>{label}</MenuItem>
+          <Terms open={openDialogName === "TERMS"} onClose={closeDialog} />
+        </div>
+      ) : (
         <Link
           {...{
             component: RouterLink,
