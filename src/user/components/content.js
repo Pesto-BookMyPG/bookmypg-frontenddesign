@@ -1,26 +1,19 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
-import ChevronRight from "@material-ui/icons/ChevronRight";
 
 const useStylesselect = makeStyles((theme) => ({
   formControl: {
@@ -114,7 +107,6 @@ export default function Album() {
         <Typography component="h1" variant="h6" color="secondary" gutterBottom>
           Who are we?
         </Typography>
-        {/* End hero unit */}
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <Typography
@@ -132,10 +124,7 @@ export default function Album() {
           <Grid item xs={12} sm={6}>
             <ImageList cols={1}>
               <ImageListItem>
-                <img
-                  src="images/Hostel Images/img.jpg"
-                  alt={"Image not available"}
-                />
+                <img src="images/Hostel Images/img.jpg" alt={"Not available"} />
               </ImageListItem>
             </ImageList>
           </Grid>
@@ -146,15 +135,11 @@ export default function Album() {
         maxWidth="md"
         style={{ borderTop: `1px solid rgba(0, 0, 0, 0.12)` }}
       >
-        {/* End hero unit */}
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <ImageList cols={1}>
               <ImageListItem>
-                <img
-                  src="images/Hostel Images/1.jpg"
-                  alt={"Image not available"}
-                />
+                <img src="images/Hostel Images/1.jpg" alt={"Not available"} />
               </ImageListItem>
             </ImageList>
           </Grid>

@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // pages for this product
 import Homepage from "./user/views/Homepage";
 import Propertydetails from "./user/views/Propertydetails";
-import Propertylist from "./views/LandingPage/Propertylist";
+import Propertylist from "./user/views/Propertylist";
 import Login from "./user/views/login";
 
 var hist = createBrowserHistory();

@@ -12,7 +12,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import Terms from "./terms";
+import Terms from "../views/login";
 
 const headersData = [
   {
