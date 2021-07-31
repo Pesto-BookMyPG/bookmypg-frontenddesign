@@ -25,8 +25,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:css": "stylelint app/**/*.js",
+    "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
+    "lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts --fix",
+    "lint:js": "npm run lint:eslint -- . ",
+    "linting": "lint-staged"
   },
+  "pre-commit": "linting",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -43,6 +50,26 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.24.0",
+    "lint-staged": "^11.1.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.3.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write"
     ]
   }
 }
