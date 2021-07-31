@@ -1,6 +1,6 @@
 {
     "env": {
-        "browser": true,
+        "node": true,
         "es2021": true
     },
     "extends": [
@@ -18,5 +18,12 @@
         "react"
     ],
     "rules": {
-    }
+        "semi": [2, "always"],
+        "quotes": [1, "single"] //quote type `` "" ''
+    },
+    "settings": {
+        "react": {
+          "version": "detect"
+        }
+      }
 }
