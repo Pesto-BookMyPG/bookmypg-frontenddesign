@@ -28,6 +28,8 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { useTheme } from "@material-ui/core/styles";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import Rating from "../components/rating";
+import Schedulevisit from "./schedulevisit";
+import Bookproperty from "./bookproperty";
 
 const MyCollection = [
   {
@@ -191,14 +193,10 @@ export default function Album() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justifyContent="center">
                 <Grid item>
-                  <Button variant="contained" color="secondary">
-                    Schedule Visit
-                  </Button>
+                  <Bookproperty />
                 </Grid>
                 <Grid item>
-                  <Button variant="contained" color="secondary">
-                    Book Property
-                  </Button>
+                  <Schedulevisit />
                 </Grid>
               </Grid>
             </div>

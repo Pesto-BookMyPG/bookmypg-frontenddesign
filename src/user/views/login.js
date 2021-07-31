@@ -34,9 +34,6 @@ export default function FormDialog(props) {
 
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
-      </Button> */}
       <Dialog
         open={true}
         onClose={handleClose}
