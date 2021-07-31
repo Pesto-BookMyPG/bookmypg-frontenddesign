@@ -10,10 +10,19 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Terms from "./terms";
-
+import { GoogleLoginButton } from "react-social-login-buttons";
+import firebase from "firebase/app";
+import "firebase/auth";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 const headersData = [
   {
     label: "Home",
@@ -26,10 +35,6 @@ const headersData = [
   {
     label: "Contact us",
     href: "/logout",
-  },
-  {
-    label: "Login",
-    href: "/login",
   },
 ];
 
@@ -66,7 +71,8 @@ const useStyles = makeStyles(() => ({
 
 export default function Header() {
   const { header, logo, menuButton, toolbar, drawerContainer } = useStyles();
-
+  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
   const [state, setState] = useState({
     mobileView: false,
     drawerOpen: false,
@@ -93,11 +99,40 @@ export default function Header() {
     };
   }, []);
 
+  const LoginPopup = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleLogin = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(provider);
+    setOpen(false);
+    history.push("/");
+  };
+
   const displayDesktop = () => {
     return (
       <Toolbar className={toolbar}>
         {femmecubatorLogo}
-        <div>{getMenuButtons()}</div>
+        <div>
+          {getMenuButtons()}
+          <Button
+            style={{
+              color: "inherit",
+              fontFamily: "Open Sans, sans-serif",
+              fontWeight: 700,
+              size: "18px",
+              marginLeft: "38px",
+            }}
+            onClick={LoginPopup}
+          >
+            {"Login"}
+          </Button>
+        </div>
       </Toolbar>
     );
   };
@@ -130,6 +165,18 @@ export default function Header() {
           }}
         >
           <div className={drawerContainer}>{getDrawerChoices()}</div>
+          <Button
+            style={{
+              marginLeft: "-30px",
+              textTransform: "none",
+              fontFamily: "Open Sans, sans-serif",
+              fontWeight: 800,
+              size: "30px",
+            }}
+            onClick={LoginPopup}
+          >
+            Login
+          </Button>
         </Drawer>
 
         <div>{femmecubatorLogo}</div>
@@ -207,10 +254,36 @@ export default function Header() {
   };
 
   return (
-    <header>
-      <AppBar className={header}>
-        {mobileView ? displayMobile() : displayDesktop()}
-      </AppBar>
-    </header>
+    <>
+      <header>
+        <AppBar className={header}>
+          {mobileView ? displayMobile() : displayDesktop()}
+        </AppBar>
+      </header>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">
+            Please select your account
+          </DialogTitle>
+          <DialogActions>
+            <GoogleLoginButton
+              text="Google"
+              style={{ width: "140px", height: "35px" }}
+              onClick={handleLogin}
+            />
+            <Button
+              onClick={handleClose}
+              style={{ width: "140px", variant: "outlined", color: "primary" }}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </>
   );
 }
