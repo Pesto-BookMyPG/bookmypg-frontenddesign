@@ -1,33 +1,20 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import ImageList from "@material-ui/core/ImageList";
-import ImageListItem from "@material-ui/core/ImageListItem";
-import ChevronRight from "@material-ui/icons/ChevronRight";
 import MobileStepper from "@material-ui/core/MobileStepper";
-import Paper from "@material-ui/core/Paper";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-
 import { useTheme } from "@material-ui/core/styles";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import Rating from "../components/rating";
+import Schedulevisit from "./Schedulevisit";
+import Bookproperty from "./Bookproperty";
 
 const MyCollection = [
   {
@@ -51,16 +38,6 @@ const MyCollection = [
     imgPath: "images/Hostel Images/test6.jpg",
   },
 ];
-
-const useStylesselect = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(2),
-    minWidth: "80%",
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -110,14 +87,6 @@ const cards = [1, 2, 3, 4];
 
 export default function Album() {
   const classes = useStyles();
-
-  const classesselect = useStylesselect();
-
-  const [location, setLocation] = React.useState("");
-  const handleChange = (event) => {
-    setLocation(event.target.value);
-  };
-  const CollectionSize = MyCollection.length;
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -191,14 +160,10 @@ export default function Album() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justifyContent="center">
                 <Grid item>
-                  <Button variant="contained" color="secondary">
-                    Schedule Visit
-                  </Button>
+                  <Bookproperty />
                 </Grid>
                 <Grid item>
-                  <Button variant="contained" color="secondary">
-                    Book Property
-                  </Button>
+                  <Schedulevisit />
                 </Grid>
               </Grid>
             </div>

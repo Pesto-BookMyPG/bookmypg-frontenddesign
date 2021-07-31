@@ -15,30 +15,13 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-
 import { createTheme } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-
-const newtheme = createTheme({
-  palette: {
-    primary: {
-      light: "#757ce8",
-      main: "#212121",
-      dark: "#002884",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ff7961",
-      main: "#616161",
-      dark: "#ba000d",
-      contrastText: "#fff",
-    },
-  },
-});
+import Theme from "../theme/theme";
 
 const useStylesselect = makeStyles((theme) => ({
   formControl: {
@@ -101,7 +84,7 @@ export default function LandingPage() {
   };
   return (
     <div className={classes.root}>
-      <MuiThemeProvider theme={newtheme}>
+      <MuiThemeProvider theme={Theme}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <AppBar position="static" color="secondary">

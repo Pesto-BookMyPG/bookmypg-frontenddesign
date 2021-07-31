@@ -17,12 +17,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import Terms from "./terms";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import Terms from "../views/login";
+
 const headersData = [
   {
     label: "Home",
@@ -67,10 +68,26 @@ const useStyles = makeStyles(() => ({
   drawerContainer: {
     padding: "20px 30px",
   },
+  button: {
+    justifyContent: "center",
+    display: "grid",
+    padding: "18px",
+  },
+  buttonmargin: {
+    marginTop: 10,
+  },
 }));
 
 export default function Header() {
-  const { header, logo, menuButton, toolbar, drawerContainer } = useStyles();
+  const {
+    header,
+    logo,
+    menuButton,
+    toolbar,
+    drawerContainer,
+    button,
+    buttonmargin,
+  } = useStyles();
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
   const [state, setState] = useState({
@@ -267,21 +284,28 @@ export default function Header() {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-            Please select your account
+            Please login to your account
           </DialogTitle>
-          <DialogActions>
+          <div className={button}>
             <GoogleLoginButton
-              text="Google"
-              style={{ width: "140px", height: "35px" }}
+              text="Sign In with Google"
+              style={{
+                width: "230px",
+                height: "35px",
+                justifyContent: "center",
+                textAlign: "center",
+              }}
               onClick={handleLogin}
             />
             <Button
+              variant="contained"
+              color="secondary"
               onClick={handleClose}
-              style={{ width: "140px", variant: "outlined", color: "primary" }}
+              className={buttonmargin}
             >
               Cancel
             </Button>
-          </DialogActions>
+          </div>
         </Dialog>
       </div>
     </>

@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import Propertycontent from "./Propertycontent";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import Propertylistcontent from "./Propertylistnew";
 import Theme from "../theme/theme";
 
 const useStyles = makeStyles({
@@ -52,7 +52,7 @@ export default function WorkSection() {
       <MuiThemeProvider theme={Theme}>
         <Grid container alignItems="center">
           <Header />
-          <Propertycontent />
+          <Propertylistcontent />
           <Footer />
         </Grid>
       </MuiThemeProvider>

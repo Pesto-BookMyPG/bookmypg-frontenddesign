@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // pages for this product
 import Homepage from "./user/views/Homepage";
 import Propertydetails from "./user/views/Propertydetails";
+import Propertylist from "./user/views/Propertylist";
 import Login from "./user/views/login";
 
 var hist = createBrowserHistory();
@@ -15,6 +16,7 @@ ReactDOM.render(
   <BrowserRouter history={hist}>
     <Switch>
       <Route path="/propertydetails" component={Propertydetails} />
+      <Route path="/propertylist" component={Propertylist} />
       <Route path="/login" component={Login} />
       <Route path="/" component={Homepage} />
     </Switch>
