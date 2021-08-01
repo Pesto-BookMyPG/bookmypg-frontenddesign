@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -6,8 +7,14 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, responsiveFontSizes } from "@material-ui/core/styles";
 import Rating from "../components/rating";
+import PropertiesSelector from "../components/PropertiesSelector";
+import propertiesActions from "../../redux-store/actions/propertiesActions";
+import getImages from "../../aws";
+const aws = require("aws-sdk");
+
+const config = require("../../config.json");
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -78,9 +85,37 @@ const useStyles = makeStyles((theme) => ({
 
 const cards = [1, 2, 3, 4];
 
-export default function Album() {
+export function PropertyListContent(props) {
   const classes = useStyles();
 
+  useEffect(async () => {
+    try {
+      aws.config.setPromisesDependency();
+      aws.config.update({
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey,
+        region: config.region,
+      });
+
+      const s3 = new aws.S3();
+      const file = await s3
+        .listObjects({
+          Bucket: "bookmypg-photos",
+          // Key: "property-photos/610524e745e8de3ac8d1aa5b/House-pic1.jpg",
+        })
+        .promise();
+      const response = {
+        data: file.Body,
+        mimetype: file.ContentType,
+      };
+      console.log("response s3", response);
+      return response;
+    } catch (ex) {
+      console.log("Error loading images from s3", ex);
+    }
+  }, []);
+
+  console.log("PROPERTIES", props.properties);
   return (
     <React.Fragment>
       <Grid container spacing={2}>
@@ -136,3 +171,22 @@ export default function Album() {
     </React.Fragment>
   );
 }
+
+const mapStateToProps = (state) => {
+  const propertiesSelector = PropertiesSelector(state.properties);
+
+  return {
+    properties: propertiesSelector.getPropertiesData(),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProperties: () => dispatch(propertiesActions.getProperties()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PropertyListContent);

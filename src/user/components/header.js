@@ -7,31 +7,31 @@ import {
   IconButton,
   Drawer,
   Link,
-  MenuItem
-} from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import React, { useState, useEffect } from 'react'
-import { Link as RouterLink, useHistory } from 'react-router-dom'
-import { GoogleLoginButton } from 'react-social-login-buttons'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+  MenuItem,
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { useState, useEffect } from 'react';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { GoogleLoginButton } from 'react-social-login-buttons';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 const headersData = [
   {
     label: 'Home',
-    href: '/listings'
+    href: '/',
   },
   {
     label: 'About us',
-    href: '/account'
+    href: '/about',
   },
   {
     label: 'Contact us',
-    href: '/logout'
-  }
-]
+    href: '/contact',
+  },
+];
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -40,39 +40,39 @@ const useStyles = makeStyles(() => ({
 
     paddingLeft: '118px',
     '@media (max-width: 900px)': {
-      paddingLeft: 0
-    }
+      paddingLeft: 0,
+    },
   },
   logo: {
     fontFamily: 'Work Sans, sans-serif',
     fontWeight: 600,
     color: '#FFFEFE',
-    textAlign: 'left'
+    textAlign: 'left',
   },
   menuButton: {
     fontFamily: 'Open Sans, sans-serif',
     fontWeight: 700,
     size: '18px',
-    marginLeft: '38px'
+    marginLeft: '38px',
   },
   toolbar: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   drawerContainer: {
-    padding: '20px 30px'
+    padding: '20px 30px',
   },
   button: {
     justifyContent: 'center',
     display: 'grid',
-    padding: '18px'
+    padding: '18px',
   },
   buttonmargin: {
-    marginTop: 10
-  }
-}))
+    marginTop: 10,
+  },
+}));
 
-export default function Header () {
+export default function Header(props) {
   const {
     header,
     logo,
@@ -80,50 +80,55 @@ export default function Header () {
     toolbar,
     drawerContainer,
     button,
-    buttonmargin
-  } = useStyles()
-  const [open, setOpen] = React.useState(false)
-  const history = useHistory()
+    buttonmargin,
+  } = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
   const [state, setState] = useState({
     mobileView: false,
-    drawerOpen: false
-  })
+    drawerOpen: false,
+  });
 
   // const [anchorEl, setAnchorEl] = React.useState(null);
   // const [openDialogName, setOpenDialog] = React.useState(null);
 
-  const { mobileView, drawerOpen } = state
+  const { mobileView, drawerOpen } = state;
 
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
         ? setState(prevState => ({ ...prevState, mobileView: true }))
-        : setState(prevState => ({ ...prevState, mobileView: false }))
-    }
+        : setState(prevState => ({ ...prevState, mobileView: false }));
+    };
 
-    setResponsiveness()
+    setResponsiveness();
 
-    window.addEventListener('resize', () => setResponsiveness())
+    window.addEventListener('resize', () => setResponsiveness());
 
     return () => {
-      window.removeEventListener('resize', () => setResponsiveness())
-    }
-  }, [])
+      window.removeEventListener('resize', () => setResponsiveness());
+    };
+  }, []);
 
   const LoginPopup = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
+
+  const handleLogout = () => {
+    props.setLoggedUser('');
+  };
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const handleLogin = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    await firebase.auth().signInWithPopup(provider)
-    setOpen(false)
-    history.push('/')
-  }
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const response = await firebase.auth().signInWithPopup(provider);
+    props.setLoggedUser(response.user);
+    setOpen(false);
+    history.push('/');
+  };
 
   const displayDesktop = () => {
     return (
@@ -131,27 +136,41 @@ export default function Header () {
         {femmecubatorLogo}
         <div>
           {getMenuButtons()}
-          <Button
-            style={{
-              color: 'inherit',
-              fontFamily: 'Open Sans, sans-serif',
-              fontWeight: 700,
-              size: '18px',
-              marginLeft: '38px'
-            }}
-            onClick={LoginPopup}>
-            {'Login'}
-          </Button>
+          {props.loggedUser == '' ? (
+            <Button
+              style={{
+                color: 'inherit',
+                fontFamily: 'Open Sans, sans-serif',
+                fontWeight: 700,
+                size: '18px',
+                marginLeft: '38px',
+              }}
+              onClick={LoginPopup}>
+              {'Login'}
+            </Button>
+          ) : (
+            <Button
+              style={{
+                color: 'inherit',
+                fontFamily: 'Open Sans, sans-serif',
+                fontWeight: 700,
+                size: '18px',
+                marginLeft: '38px',
+              }}
+              onClick={handleLogout}>
+              {'Logout'}
+            </Button>
+          )}
         </div>
       </Toolbar>
-    )
-  }
+    );
+  };
 
   const displayMobile = () => {
     const handleDrawerOpen = () =>
-      setState(prevState => ({ ...prevState, drawerOpen: true }))
+      setState(prevState => ({ ...prevState, drawerOpen: true }));
     const handleDrawerClose = () =>
-      setState(prevState => ({ ...prevState, drawerOpen: false }))
+      setState(prevState => ({ ...prevState, drawerOpen: false }));
 
     return (
       <Toolbar>
@@ -161,7 +180,7 @@ export default function Header () {
             color: 'inherit',
             'aria-label': 'menu',
             'aria-haspopup': 'true',
-            onClick: handleDrawerOpen
+            onClick: handleDrawerOpen,
           }}>
           <MenuIcon />
         </IconButton>
@@ -170,26 +189,40 @@ export default function Header () {
           {...{
             anchor: 'left',
             open: drawerOpen,
-            onClose: handleDrawerClose
+            onClose: handleDrawerClose,
           }}>
           <div className={drawerContainer}>{getDrawerChoices()}</div>
-          <Button
-            style={{
-              marginLeft: '-30px',
-              textTransform: 'none',
-              fontFamily: 'Open Sans, sans-serif',
-              fontWeight: 800,
-              size: '30px'
-            }}
-            onClick={LoginPopup}>
-            Login
-          </Button>
+          {props.loggedUser == '' ? (
+            <Button
+              style={{
+                marginLeft: '-30px',
+                textTransform: 'none',
+                fontFamily: 'Open Sans, sans-serif',
+                fontWeight: 800,
+                size: '30px',
+              }}
+              onClick={LoginPopup}>
+              Login
+            </Button>
+          ) : (
+            <Button
+              style={{
+                marginLeft: '-30px',
+                textTransform: 'none',
+                fontFamily: 'Open Sans, sans-serif',
+                fontWeight: 800,
+                size: '30px',
+              }}
+              onClick={handleLogout}>
+              Logout
+            </Button>
+          )}
         </Drawer>
 
         <div>{femmecubatorLogo}</div>
       </Toolbar>
-    )
-  }
+    );
+  };
 
   const getDrawerChoices = () => {
     /* const handleClick = (event) => {
@@ -221,19 +254,19 @@ export default function Header () {
             component: RouterLink,
             to: href,
             color: 'inherit',
-            style: { textDecoration: 'none' }
+            style: { textDecoration: 'none' },
           }}>
           <MenuItem>{label}</MenuItem>
         </Link>
-      )
-    })
-  }
+      );
+    });
+  };
 
   const femmecubatorLogo = (
     <Typography variant="h6" component="h1" className={logo}>
       BookMyPG
     </Typography>
-  )
+  );
 
   const getMenuButtons = () => {
     return headersData.map(({ label, href }) => {
@@ -244,13 +277,13 @@ export default function Header () {
             color: 'inherit',
             to: href,
             component: RouterLink,
-            className: menuButton
+            className: menuButton,
           }}>
           {label}
         </Button>
-      )
-    })
-  }
+      );
+    });
+  };
 
   return (
     <>
@@ -274,7 +307,7 @@ export default function Header () {
                 width: '230px',
                 height: '35px',
                 justifyContent: 'center',
-                textAlign: 'center'
+                textAlign: 'center',
               }}
               onClick={handleLogin}
             />
@@ -289,5 +322,5 @@ export default function Header () {
         </Dialog>
       </div>
     </>
-  )
+  );
 }

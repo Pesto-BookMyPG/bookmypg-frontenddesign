@@ -44,14 +44,15 @@ const useStyles = makeStyles({
   },
 });
 
-export default function WorkSection() {
+export default function HomePage() {
   const classes = useStyles();
+  const [loggedUser, setLoggedUser] = React.useState("");
 
   return (
     <div className={classes.section}>
       <MuiThemeProvider theme={Theme}>
         <Grid container alignItems="center">
-          <Header />
+          <Header loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
           <Content />
           <Footer />
         </Grid>

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -14,6 +15,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
+import { useHistory } from "react-router-dom";
+import PropertiesSelector from "./PropertiesSelector";
+import propertiesActions from "../../redux-store/actions/propertiesActions";
 
 const useStylesselect = makeStyles((theme) => ({
   formControl: {
@@ -60,14 +64,21 @@ const useStyles = makeStyles((theme) => ({
 
 const cards = [1, 2, 3, 4];
 
-export default function Album() {
+export function Album(props) {
   const classes = useStyles();
 
   const classesselect = useStylesselect();
 
   const [location, setLocation] = React.useState("");
+  const history = useHistory();
+
+  useEffect(() => {
+    props.getProperties();
+  }, []);
+
   const handleChange = (event) => {
     setLocation(event.target.value);
+    history.push("/propertylist");
   };
   return (
     <React.Fragment>
@@ -210,3 +221,19 @@ export default function Album() {
     </React.Fragment>
   );
 }
+
+const mapStateToProps = (state) => {
+  const propertiesSelector = PropertiesSelector(state.properties);
+
+  return {
+    properties: propertiesSelector.getPropertiesData(),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProperties: () => dispatch(propertiesActions.getProperties()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Album);
